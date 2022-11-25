@@ -5,7 +5,9 @@ ActivityPhp
 [![Maintainability](https://api.codeclimate.com/v1/badges/72317e4f93b477359432/maintainability)](https://codeclimate.com/github/rtio/activitypub-core/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/72317e4f93b477359432/test_coverage)](https://codeclimate.com/github/rtio/activitypub-core/test_coverage)
 
-ActivityPhp is an implementation of ActivityPub layers in PHP.
+This repository is a fork from https://github.com/landrok/activitypub.
+
+ActivityPhp core is an implementation of the ActivityPub data layers in PHP.
 
 It provides two layers:
 
@@ -19,7 +21,7 @@ As the two layers are implemented, it aims to be an ActivityPub conformant Feder
 All normalized types are implemented too. If you need to create a new
 one, just extend existing types.
 
-[See the full documentation](https://landrok.github.io/activitypub) or
+[See the full documentation](https://rtio.github.io/activitypub-core) or
 an overview below.
 
 Table of contents
@@ -42,16 +44,6 @@ Table of contents
     - [Use your own extended types](#use-your-own-extended-types)
     - [Create your own property validator](#create-your-own-property-validator)
     - [Dialects management](https://landrok.github.io/activitypub/activitypub-dialects-management.html)
-- [Server](#server)
-    - [Server configuration](https://landrok.github.io/activitypub/activitypub-server-usage.html)
-    - [Verify HTTP signatures](https://landrok.github.io/activitypub/activitypub-server-verify-http-signatures.html)
-    - [WebFinger](#webfinger)
-    - [WebFinger::toArray()](#webfingertoarray)
-    - [WebFinger::getSubject()](#webfingergetsubject)
-    - [WebFinger::getProfileId()](#webfingergetprofileid)
-    - [WebFinger::getHandle()](#webfingergethandle)
-    - [WebFinger::getAliases()](#webfingergetaliases)
-    - [WebFinger::getLinks()](#webfingergetlinks)
 
 ________________________________________________________________________
 
@@ -501,196 +493,11 @@ Type::addValidator('myProperty', MyPropertyValidator::class);
 ```
 ________________________________________________________________________
 
-
-Server
-------
-
-A server instance is an entry point of a federation.
-
-Its purpose is to receive, send and forward activities appropriately.
-
-A minimal approach is:
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-```
-
-For more configuration parameters, [See the full documentation](https://landrok.github.io/activitypub)
-
-### WebFinger
-
-WebFinger is a protocol that allows for discovery of information about
-people.
-
-Given a handle, ActivityPub instances can discover profiles using this
-protocol.
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-
-$handle = 'bob@example.org';
-
-// Get a WebFinger instance
-$webfinger = $server->actor($handle)->webfinger();
-```
-
-In this implementation, we can use an Object Identifier (URI) instead of
-a WebFinger handle.
-
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-
-$handle = 'https://example.org/users/bob';
-
-// Get a WebFinger instance
-$webfinger = $server->actor($handle)->webfinger();
-```
-________________________________________________________________________
-
-### WebFinger::toArray()
-
-Get all WebFinger data as an array.
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-
-$handle = 'bob@example.org';
-
-// Get a WebFinger instance
-$webfinger = $server->actor($handle)->webfinger();
-
-// Dumps all properties
-print_r($webfinger->toArray());
-
-// A one line call
-print_r(
-    $server->actor($handle)->webfinger()->toArray()
-);
-```
-
-Would output something like:
-
-```
-Array
-(
-    [subject] => acct:bob@example.org
-    [aliases] => Array
-        (
-            [0] => http://example.org/users/bob
-        )
-    [links] => Array
-        (
-            [0] => Array
-                (
-                    [rel] => self
-                    [type] => application/activity+json
-                    [href] => http://example.org/users/bob
-                )
-        )
-)
-```
-________________________________________________________________________
-
-### WebFinger::getSubject()
-
-Get a WebFinger resource.
-
-```php
-echo $webfinger->getSubject();
-
-// Would output 'acct:bob@example.org'
-```
-________________________________________________________________________
-
-### WebFinger::getProfileId()
-
-Get ActivityPub object identifier (URI).
-
-```php
-echo $webfinger->getProfileId();
-
-// Would output 'http://example.org/users/bob'
-```
-________________________________________________________________________
-
-### WebFinger::getHandle()
-
-Get a profile handle.
-
-```php
-echo $webfinger->getHandle();
-
-// Would output 'bob@example.org'
-```
-________________________________________________________________________
-
-### WebFinger::getAliases()
-
-Get all aliases entries for this profile.
-
-```php
-print_r(
-    $webfinger->getAliases()
-);
-```
-
-Would output something like:
-
-```
-Array
-(
-    [0] => http://example.org/users/bob
-)
-```
-
-________________________________________________________________________
-
-### WebFinger::getLinks()
-
-Get all links entries for this profile.
-
-```php
-
-print_r(
-    $webfinger->getLinks()
-);
-
-```
-
-Would output something like:
-
-```
-Array
-(
-    [0] => Array
-        (
-            [rel] => self
-            [type] => application/activity+json
-            [href] => http://example.org/users/bob
-        )
-)
-
-```
-________________________________________________________________________
-
-
 More
 ----
 
-- [See the full documentation](https://landrok.github.io/activitypub/)
+- [See the full documentation](https://rtio.github.io/activitypub-core/)
 
-- To discuss new features, make feedback or simply to share ideas, you 
-  can contact me on Mastodon at [https://cybre.space/@landrok](https://cybre.space/@landrok)
 - [ActivityPub](https://www.w3.org/TR/activitypub/)
 - [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/)
 - [JSON-LD](https://www.w3.org/TR/json-ld/)
-- [WebFinger](https://tools.ietf.org/html/rfc7033)
