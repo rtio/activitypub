@@ -1,9 +1,9 @@
 ActivityPhp
 ===========
 
-[![Build Status](https://travis-ci.com/landrok/activitypub.svg?branch=master)](https://travis-ci.com/landrok/activitypub)
-[![Maintainability](https://api.codeclimate.com/v1/badges/410c804f4cd03cc39b60/maintainability)](https://codeclimate.com/github/landrok/activitypub/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/410c804f4cd03cc39b60/test_coverage)](https://codeclimate.com/github/landrok/activitypub/test_coverage)
+[![Build Status](https://app.travis-ci.com/rtio/activitypub-core.svg?branch=master)](https://app.travis-ci.com/rtio/activitypub-core)
+[![Maintainability](https://api.codeclimate.com/v1/badges/72317e4f93b477359432/maintainability)](https://codeclimate.com/github/rtio/activitypub-core/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/72317e4f93b477359432/test_coverage)](https://codeclimate.com/github/rtio/activitypub-core/test_coverage)
 
 ActivityPhp is an implementation of ActivityPub layers in PHP.
 
