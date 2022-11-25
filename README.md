@@ -21,7 +21,7 @@ As the two layers are implemented, it aims to be an ActivityPub conformant Feder
 All normalized types are implemented too. If you need to create a new
 one, just extend existing types.
 
-[See the full documentation](https://rtio.github.io/activitypub-core) or
+[See the full documentation](https://landrok.github.io/activitypub) or
 an overview below.
 
 Table of contents
@@ -496,7 +496,7 @@ ________________________________________________________________________
 More
 ----
 
-- [See the full documentation](https://rtio.github.io/activitypub-core/)
+- [See the full documentation](https://landrok.github.io/activitypub/)
 
 - [ActivityPub](https://www.w3.org/TR/activitypub/)
 - [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/)
