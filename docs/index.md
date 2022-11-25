@@ -43,17 +43,6 @@ Basics
     - [Use your own extended types]({{ site.doc_baseurl }}/#use-your-own-extended-types)
     - [Create your own property validator]({{ site.doc_baseurl }}/#create-your-own-property-validator)
     - [Dialects management]({{ site.doc_baseurl }}/activitypub-dialects-management.html)
-- [Server](#server)
-    - [Server instance configuration]({{ site.doc_baseurl }}/activitypub-server-usage.html)
-    - [Verify HTTP signatures]({{ site.doc_baseurl }}/activitypub-server-verify-http-signatures.html)
-    - [WebFinger]({{ site.doc_baseurl }}/#webfinger)
-    - [WebFinger::toArray()]({{ site.doc_baseurl }}/#webfingertoarray)
-    - [WebFinger::getSubject()]({{ site.doc_baseurl }}/#webfingergetsubject)
-    - [WebFinger::getProfileId()]({{ site.doc_baseurl }}/#webfingergetprofileid)
-    - [WebFinger::getHandle()]({{ site.doc_baseurl }}/#webfingergethandle)
-    - [WebFinger::getAliases()]({{ site.doc_baseurl }}/#webfingergetaliases)
-    - [WebFinger::getLinks()]({{ site.doc_baseurl }}/#webfingergetlinks)
-    - [Examples]({{ site.doc_baseurl }}/#server-examples)
 
 ________________________________________________________________________
 
@@ -68,7 +57,7 @@ Install
 -------
 
 ```sh
-composer require landrok/activitypub
+composer require rtio/activitypub-core
 ```
 ________________________________________________________________________
 
@@ -77,7 +66,7 @@ Types
 
 ### Type factory
 
-You can instanciate ActivityStreams types using their short name.
+You can instantiate ActivityStreams types using their short name.
 
 ```php
 use ActivityPhp\Type;
@@ -87,7 +76,7 @@ $note = Type::create('Note');
 
 ```
 
-Instanciating a type and setting properties is possible with the second 
+Instantiate a type and setting properties is possible with the second 
 parameter.
 
 ```php
@@ -100,7 +89,7 @@ $note = Type::create('Note', [
 ```
 
 Starting from an array with a 'type' key, it's even possible to directly
-instanciate your type.
+instantiate your type.
 
 ```php
 use ActivityPhp\Type;
@@ -519,217 +508,16 @@ and how to use them thanks to
 
 ________________________________________________________________________
 
-
-Server
-------
-
-A server instance is the entry point to a federation.
-
-Its purpose is to receive, send and forward activities appropriately.
-
-A minimalistic approach is:
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-```
-
-It's sufficient to make [some public requests](#server-examples).
-
-For more advanced server configurations, Have a look at [Server Manual]({{ site.doc_baseurl }}/activitypub-server-usage.html).
-
-### WebFinger
-
-WebFinger is a protocol that allows for discovery of information about
-people.
-
-Given a handle, ActivityPub instances can discover profiles using this
-protocol.
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-
-$handle = 'bob@example.org';
-
-// Get a WebFinger instance
-$webfinger = $server->actor($handle)->webfinger();
-```
-
-In this implementation, we can use an Object Identifier (URI) instead of
-a WebFinger handle.
-
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-
-$handle = 'https://example.org/users/bob';
-
-// Get a WebFinger instance
-$webfinger = $server->actor($handle)->webfinger();
-```
-________________________________________________________________________
-
-### WebFinger::toArray()
-
-Get all WebFinger data as an array.
-
-```php
-use ActivityPhp\Server;
-
-$server = new Server();
-
-$handle = 'bob@example.org';
-
-// Get a WebFinger instance
-$webfinger = $server->actor($handle)->webfinger();
-
-// Dumps all properties
-print_r($webfinger->toArray());
-
-// A one line call
-print_r(
-    $server->actor($handle)->webfinger()->toArray()
-);
-```
-
-Would output something like:
-
-```
-Array
-(
-    [subject] => acct:bob@example.org
-    [aliases] => Array
-        (
-            [0] => http://example.org/users/bob
-        )
-    [links] => Array
-        (
-            [0] => Array
-                (
-                    [rel] => self
-                    [type] => application/activity+json
-                    [href] => http://example.org/users/bob
-                )
-        )
-)
-```
-________________________________________________________________________
-
-### WebFinger::getSubject()
-
-Get a WebFinger resource.
-
-```php
-echo $webfinger->getSubject();
-
-// Would output 'acct:bob@example.org'
-```
-________________________________________________________________________
-
-### WebFinger::getProfileId()
-
-Get ActivityPub object identifier (URI).
-
-```php
-echo $webfinger->getProfileId();
-
-// Would output 'http://example.org/users/bob'
-```
-________________________________________________________________________
-
-### WebFinger::getHandle()
-
-Get a profile handle.
-
-```php
-echo $webfinger->getHandle();
-
-// Would output 'bob@example.org'
-```
-________________________________________________________________________
-
-### WebFinger::getAliases()
-
-Get all aliases entries for this profile.
-
-```php
-print_r(
-    $webfinger->getAliases()
-);
-```
-
-Would output something like:
-
-```
-Array
-(
-    [0] => http://example.org/users/bob
-)
-```
-
-________________________________________________________________________
-
-### WebFinger::getLinks()
-
-Get all links entries for this profile.
-
-```php
-
-print_r(
-    $webfinger->getLinks()
-);
-
-```
-
-Would output something like:
-
-```
-Array
-(
-    [0] => Array
-        (
-            [rel] => self
-            [type] => application/activity+json
-            [href] => http://example.org/users/bob
-        )
-)
-
-```
-
-________________________________________________________________________
-
-
-Server examples
----------------
-
-- [Fetch Peertube Outbox activities]({{ site.doc_baseurl }}/fetch-peertube-outbox-activities.html)
-- [A better way to fetch Peertube Outbox activities]({{ site.doc_baseurl }}/fetch-peertube-outbox-activities-using-dialects.html)
-- [An even better way to fetch Peertube Outbox activities]({{ site.doc_baseurl }}/fetch-peertube-outbox-activities-using-ontologies.html)
-
-________________________________________________________________________
-
-
 More
 ----
 
-- [Contribute on Github](https://github.com/landrok/activitypub)
-
-- To discuss new features, make feedback or simply to share ideas, you 
-  can contact me on Mastodon at
-  [https://cybre.space/@landrok](https://cybre.space/@landrok)
+- [Contribute on Github](https://github.com/rtio/activitypub-core)
   
 - [ActivityPub](https://www.w3.org/TR/activitypub/)
 
 - [ActivityStreams 2.0](https://www.w3.org/TR/activitystreams-core/)
 
 - [JSON-LD](https://www.w3.org/TR/json-ld/)
-
-- [WebFinger](https://tools.ietf.org/html/rfc7033)
 
 ________________________________________________________________________
 
